@@ -1,0 +1,71 @@
+# ─── Axis AI Configuration ───────────────────────────────────────────────────
+# Edit this file to tune providers, timeouts, and system behaviour.
+
+axis:
+  version: "2.0"
+  language: "en"          # en | hi | hinglish (auto-detected at runtime)
+
+# ─── Intelligence Layer Priorities ───────────────────────────────────────────
+# Layers are tried top-to-bottom. Set enabled: false to skip a layer.
+layers:
+  local_command:   { enabled: true,  priority: 0 }
+  rule_nlp:        { enabled: true,  priority: 1 }
+  workflow:        { enabled: true,  priority: 2 }
+  tiny_model:      { enabled: true,  priority: 3 }
+  ollama:          { enabled: true,  priority: 4 }
+  gemini:          { enabled: true,  priority: 5 }
+
+# ─── Gemini Provider ─────────────────────────────────────────────────────────
+gemini:
+  models:
+    - gemini-1.5-flash-latest
+    - gemini-1.5-flash-001
+    - gemini-2.0-flash
+    - gemini-1.5-pro-latest
+  max_retries: 3
+  timeout: 30
+  max_output_tokens: 512
+  temperature: 0.1
+  response_temperature: 0.7
+
+# ─── Ollama Provider ─────────────────────────────────────────────────────────
+ollama:
+  base_url: "http://localhost:11434"
+  models:
+    - llama3
+    - llama3.1
+    - mistral
+    - gemma
+  max_retries: 2
+  timeout: 60
+
+# ─── Tiny Local Model ────────────────────────────────────────────────────────
+tiny_model:
+  # Path to a GGUF model file (optional). Leave blank to auto-disable.
+  model_path: ""
+  # e.g. ~/models/phi-3-mini-q4.gguf
+  max_tokens: 256
+  temperature: 0.1
+
+# ─── Memory ──────────────────────────────────────────────────────────────────
+memory:
+  max_history_pairs: 10      # conversation turns to keep
+  entity_ttl_seconds: 300    # how long entity refs survive
+
+# ─── Safety ──────────────────────────────────────────────────────────────────
+safety:
+  confirm_destructive: true
+  destructive_actions:
+    - delete
+    - move
+    - shutdown
+    - restart
+    - format
+
+# ─── Logging ─────────────────────────────────────────────────────────────────
+logging:
+  enabled: true
+  dir: "logs"
+  level: "INFO"              # DEBUG | INFO | WARNING | ERROR
+  max_bytes: 5242880         # 5 MB per file
+  backup_count: 3

@@ -1,0 +1,21 @@
+# ─── Axis AI v3.0 Requirements ───────────────────────────────────────────────
+
+# Core AI provider (cloud)
+google-genai>=2.0.0
+
+# YAML config support
+pyyaml>=6.0
+
+# ─── Windows: registry access + .lnk shortcut resolution ─────────────────────
+# Required for the App Discovery System (app_discovery.py).
+# Install only on Windows — pip will ignore this on other platforms automatically.
+pywin32>=306; sys_platform == "win32"
+
+# ─── Optional: local AI (install only if you want offline AI) ────────────────
+
+# Ollama client — no package needed; uses built-in urllib + local server
+# Install Ollama from: https://ollama.com/download
+
+# Tiny local GGUF model support (Phi-3, Qwen, Gemma, etc.)
+# Uncomment the line below to enable:
+# llama-cpp-python>=0.2.0
